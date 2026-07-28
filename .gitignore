@@ -1,0 +1,19 @@
+# Banco de dados local (SQLite)
+*.db
+*.sqlite3
+
+# Arquivos temporários do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Ambientes virtuais
+.venv/
+venv/
+.env/
+env/
+
+# Arquivos de configuração do editor
+.vscode/
