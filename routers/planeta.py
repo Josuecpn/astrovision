@@ -13,3 +13,12 @@ def cadastrar_planeta(planeta_in: schemas.PlanetaCreate, db: Session = Depends(g
 @router.get("/", response_model=list[schemas.Planeta])
 def buscar_todos(db: Session = Depends(get_db)):
     return planeta_service.listar_planetas(db)
+
+@router.put("/{planeta_id}", response_model=schemas.Planeta)
+def modificar_planeta(planeta_id: int, planeta_in: schemas.PlanetaCreate, db: Session = Depends(get_db)):
+    return planeta_service.atualizar_planeta(db, planeta_id, planeta_in)
+
+@router.delete("/{planeta_id}", status_code=status.HTTP_204_NO_CONTENT)
+def remover_planeta(planeta_id: int, db: Session = Depends(get_db)):
+    planeta_service.deletar_planeta(db, planeta_id)
+    return None

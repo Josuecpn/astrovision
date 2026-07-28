@@ -13,3 +13,12 @@ def cadastrar_meteoro(meteoro_in: schemas.MeteoroCreate, db: Session = Depends(g
 @router.get("/", response_model=list[schemas.Meteoro])
 def buscar_todos(db: Session = Depends(get_db)):
     return meteoro_service.listar_meteoros(db)
+
+@router.put("/{meteoro_id}", response_model=schemas.Meteoro)
+def modificar_meteoro(meteoro_id: int, meteoro_in: schemas.MeteoroCreate, db: Session = Depends(get_db)):
+    return meteoro_service.atualizar_meteoro(db, meteoro_id, meteoro_in)
+
+@router.delete("/{meteoro_id}", status_code=status.HTTP_204_NO_CONTENT)
+def remover_meteoro(meteoro_id: int, db: Session = Depends(get_db)):
+    meteoro_service.deletar_meteoro(db, meteoro_id)
+    return None

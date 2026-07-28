@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 import entities
-from db import engine
+from db import engine, get_db, Base
 import routers
 
 # Inicializa as tabelas no SQLite (dbastro.db) caso não existam
-entities.Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="API Cosmos - Arquitetura de Serviços",
@@ -15,6 +15,10 @@ app = FastAPI(
 app.include_router(routers.estrela_router)
 app.include_router(routers.planeta_router)
 app.include_router(routers.meteoro_router)
+app.include_router(routers.nasa_router)
+app.include_router(routers.analytics_router)
+app.include_router(routers.physics_router)
+
 
 @app.get("/")
 def index():
