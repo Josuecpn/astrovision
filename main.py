@@ -7,7 +7,7 @@ import routers
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
-    title="API Cosmos - Arquitetura de Serviços",
+    title="AstroVision",
     description="Sistema astronômico desacoplado e escalável"
 )
 
