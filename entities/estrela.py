@@ -7,6 +7,7 @@ class Estrela(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String, unique=True, index=True)
+    codigo_estelar = Column(String, unique=True, nullable=True)
     tipo_espectral = Column(String)
     massa = Column(Float)
     temperatura = Column(Integer)
