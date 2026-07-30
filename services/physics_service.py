@@ -1,12 +1,12 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
-import entities
+import models
 import numpy as np
 import plotly.graph_objects as go
 
 def calcular_distancia_kepleriana(db: Session, planeta_id: int) -> dict:
     # 1. Busca o planeta no banco
-    planeta = db.query(entities.Planeta).filter(entities.Planeta.id == planeta_id).first()
+    planeta = db.query(models.Planeta).filter(models.Planeta.id == planeta_id).first()
     if not planeta:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, 

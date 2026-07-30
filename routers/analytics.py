@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import HTMLResponse, StreamingResponse
 import plotly.express as px
-import entities
+import models
 from sqlalchemy.orm import Session
 import services.analytics_service as analytics_service
 from db import get_db
@@ -29,7 +29,7 @@ def exibir_dashboard_interativo(db: Session = Depends(get_db)):
     pronto para o navegador, funcionando 100% offline (sem depender de CDNs).
     """
     # 1. Busca os dados reais do banco SQLite
-    estrelas = db.query(entities.Estrela).all()
+    estrelas = db.query(models.Estrela).all()
     
     # 2. Estrutura os dados em listas para o Plotly
     dados_grafico = {

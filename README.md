@@ -21,7 +21,7 @@ O projeto adota o padrão **Router-Service-Repository**, desacoplando totalmente
 
 ```text
 ├── db/               # Configurações de infraestrutura do banco (SQLAlchemy)
-├── entities/         # Modelos/Tabelas do banco de dados (Entidades)
+├── models/         # Modelos/Tabelas do banco de dados (Entidades)
 ├── schemas/          # Modelos de validação de dados de entrada/saída (Pydantic)
 ├── services/         # Camada de Negócio e Física Computacional (Services)
 ├── routers/          # Controladores HTTP e Rotas (Controllers/Routers)

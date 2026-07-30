@@ -1,7 +1,7 @@
 import requests
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
-import entities
+import models
 
 def popular_banco_com_dados_nasa(db: Session) -> dict:
     url_nasa = (
@@ -39,7 +39,7 @@ def popular_banco_com_dados_nasa(db: Session) -> dict:
         if nome_planeta in planetas_em_memoria:
             continue
 
-        planeta_existe = db.query(entities.Planeta).filter(entities.Planeta.nome == nome_planeta).first()
+        planeta_existe = db.query(models.Planeta).filter(models.Planeta.nome == nome_planeta).first()
         if planeta_existe:
             continue
 
@@ -48,11 +48,11 @@ def popular_banco_com_dados_nasa(db: Session) -> dict:
         
         # Se não estiver no cache local, busca no banco real
         if not estrela:
-            estrela = db.query(entities.Estrela).filter(entities.Estrela.nome == nome_estrela).first()
+            estrela = db.query(models.Estrela).filter(models.Estrela.nome == nome_estrela).first()
         
         # Se ela não existir em lugar nenhum, cria uma nova
         if not estrela:
-            estrela = entities.Estrela(
+            estrela = models.Estrela(
                 codigo_estelar=f"NASA-{nome_estrela.replace(' ', '-')}",
                 nome=nome_estrela,
                 tipo_espectral=registro.get("st_spectype") or "Não Catalogado",
@@ -71,7 +71,7 @@ def popular_banco_com_dados_nasa(db: Session) -> dict:
         raio_terra = registro.get("pl_rade")
         raio_km = (float(raio_terra) * 6371.0) if raio_terra is not None else 6000.0
 
-        novo_planeta = entities.Planeta(
+        novo_planeta = models.Planeta(
             nome=nome_planeta,
             tipo="Exoplaneta Confirmado",
             raio_km=raio_km,
@@ -86,8 +86,8 @@ def popular_banco_com_dados_nasa(db: Session) -> dict:
 
     # --- PIPELINE DE ENGENHARIA DE DADOS: GERAÇÃO DE METEOROS/ASTEROIDES ---
     # Vincula estrelas e planetas recentemente cadastrados no banco para criar os vínculos
-    todas_estrelas = db.query(entities.Estrela).all()
-    todos_planetas = db.query(entities.Planeta).all()
+    todas_estrelas = db.query(models.Estrela).all()
+    todos_planetas = db.query(models.Planeta).all()
     meteoros_criados = 0
 
     # Massa típica e nomes baseados em meteoritos famosos e asteroides capturados
@@ -99,7 +99,7 @@ def popular_banco_com_dados_nasa(db: Session) -> dict:
         nome_meteoro = f"{nomes_base[i % len(nomes_base)]}-{100 + i}"
         
         # Validação preventiva para não duplicar meteoros se rodar o script de novo
-        if db.query(entities.Meteoro).filter(entities.Meteoro.nome == nome_meteoro).first():
+        if db.query(models.Meteoro).filter(models.Meteoro.nome == nome_meteoro).first():
             continue
 
         # Simulação Física de Captura Gravitacional:
@@ -126,7 +126,7 @@ def popular_banco_com_dados_nasa(db: Session) -> dict:
         # Se sorteio == 0, ele continua como um "Viajante Errante" (Chaves estrangeiras como null)
 
         # Dados físicos simulados do meteoro
-        novo_meteoro = entities.Meteoro(
+        novo_meteoro = models.Meteoro(
             nome=nome_meteoro,
             composicao=composicoes[i % len(composicoes)],
             velocidade_km_s=round(11.2 + (i * 1.5) % 60, 2), # Velocidades típicas de escape espacial (km/s)

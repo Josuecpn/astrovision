@@ -5,11 +5,11 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sqlalchemy.orm import Session
-import entities
+import models
 
 def gerar_grafico_massa_vs_temperatura(db: Session) -> io.BytesIO:
     # 1. Extrai os dados do banco de dados real
-    estrelas = db.query(entities.Estrela).all()
+    estrelas = db.query(models.Estrela).all()
     
     # 2. Converte os dados do SQLAlchemy para listas limpas (Estruturação de dados)
     massas = [e.massa for e in estrelas if e.massa is not None]
@@ -39,9 +39,9 @@ def gerar_grafico_massa_vs_temperatura(db: Session) -> io.BytesIO:
     return buffer
 
 def obter_dados_completos_universo(db: Session) -> dict:
-    estrelas = db.query(entities.Estrela).all()
-    planetas = db.query(entities.Planeta).all()
-    meteoros = db.query(entities.Meteoro).all()
+    estrelas = db.query(models.Estrela).all()
+    planetas = db.query(models.Planeta).all()
+    meteoros = db.query(models.Meteoro).all()
 
     return {
         "estrelas": [

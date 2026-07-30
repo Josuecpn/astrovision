@@ -21,7 +21,7 @@ if config.config_file_name is not None:
 
 # Importe o Base que possui o histórico das tabelas
 from db.db_connection import Base
-import entities  # Força o Python a carregar as entidades em memória
+import models  # Força o Python a carregar as entidades em memória
 
 target_metadata = Base.metadata
 
