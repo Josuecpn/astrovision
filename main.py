@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-import entities
+import models
 from db import engine, get_db, Base
 import routers
 
