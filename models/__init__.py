@@ -1,3 +1,3 @@
-from .estrela import Estrela
-from .planeta import Planeta
-from .meteoro import Meteoro
+from .star import Estrela
+from .planet import Planeta
+from .meteor import Meteoro

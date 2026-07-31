@@ -1,3 +1,3 @@
-from .estrela import EstrelaCreate, Estrela
-from .planeta import PlanetaCreate, Planeta
-from .meteoro import MeteoroCreate, Meteoro
+from .star import EstrelaCreate, Estrela
+from .planet import PlanetaCreate, Planeta
+from .meteor import MeteoroCreate, Meteoro
